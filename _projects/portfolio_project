@@ -1,0 +1,42 @@
+---
+layout: project
+title: Thermodynamic Analysis of a Rocket Engine
+description: ENGRD 2210 Portfolio Project
+technologies: [SolidWorks, Machining]
+image: /assets/images/hot-fire.png
+---
+
+For my ENGRD 2210 Portfolio Project, I decided to do a thermodynamic analysis on a small, pressure-fed bipropellant rocket engine that I made last year. It uses N₂O as an oxidizer, and ethanol as a fuel. The N₂O is stored as a saturated mixture of mostly liquid and a small head of vapor. Both propellant tanks are pressurized by the nitrous oxide vapor via a piston. When valves are opened, this push N₂O and ethanol through the lines and the injector, which atomizes and mixes the propellants. In the thrust chamber, the propellants react and convert their chemical potential energy into heat and pressure. This turns both propellants into gas and raises the temperature. The hot gas accelerates through a converging-diverging nozzle, which converts the pressure and thermal energy into kinetic energy. Irreversibilities include the combustion reaction, mixing of the propellants, heat loss to the environment, flow friction, and the unrestrained expansion of the exhaust. For this analysis, I will choose to look at the thrust chamber itself.
+
+![Rocket Engine Sys Diagram]({{ "/assets/images/Rocket-Engine-Sys-Diagram.jpg" | relative_url }}){: .inline-image-r style="width: 200px"}
+
+![Rocket Thermo Cycle]({{ "/assets/images/rocketcycle.jpg" | relative_url }}){: .inline-image-r style="width: 200px"}
+
+$$
+0 = \dot{m}_{N2O} + \dot{ethanol}_f - \dot{m}_exhaust
+$$
+
+The equation above shows the mass balance for the rocket engine. Since the entire system is a control volume operating at steady state, the net mass flow is 0. N₂O and ethanol enter the system, and exhaust gases flow out of the system. 
+
+$$
+0 =
+\dot{Q}_{combustion}
++ \dot{m}_{N2O} h_{N2O}
++ \dot{m}_ethanol h_{ethanol}
+-\dot{m}_e\left(h_e + \frac{V_e^2}{2}\right)
+$$
+
+The equation above shows the energy balance for the rocket engine as a whole. Since the entire system is a control volume operating at steady state, the net change in energy is 0. Additionally, since there is no change in volume for the system, the work term is also 0. A few assumptions are made to simplify the calculations. Firstly, the heat flow out of the system is assumed to be negligible, and is set to 0. Next, the potential energy for both the mass flowing in and out is assumed to be negligible, and is set to 0. Additionally, the velocity of the mass flowing in is assumed to be much smaller than that of the mass flowing out, so the kinetic energy term of the inputs is set to 0. Finally, the exhaust products are assumed to be an ideal gas, obeying the ideal gas laws and the isentropic flow relations.
+
+$$
+0 =
+\frac{\dot{Q}_combustion}{T_combustion} +
+\dot{m} s_{N2O} + \dot{m} s_{ethanol}
+- \dot{m} s_{exhaust}
+$$
+
+The equation above shows the entropy balance for the rocket engine. Since the entire system is a control volume operating at steady state, the net change in entropy is 0. One assumption made to simplify the calculations is that the entire process is assumed to be reversible, and the entropy generation is set to 0. Since the heat transfer term is hard to calculate, as T does not correspond to a physical boundary temperature, we solve for the term by finding the difference in entropy of the mass input and output.
+
+There are several ways to improve the performance of the system. The simplest method is to increase the chamber pressure of the engine. This would involve decreasing the throat size of the nozzle and/or increasing the mass flow rate. This would increase the work output of the system. There are two tradeoff: the heat flux to the chamber walls will be higher, shortening the burn time; and the walls will experience more stress, requiring thicker, heavier walls and/or stronger, more expensive alloys.
+
+The next method is to implement a regenerative cooling system. This would involve either brazing on or milling out hollow channels in the chamber walls, and then routing the fuel to run through the channels before it enters the chamber. This would cool the chamber walls, decreasing thermal stress, and recapture some of the waste heat, increasing efficiency. There is one major tradeoff: designing a regenerative cooling system adds complexity to both designing, manufacturing, and assembling.
