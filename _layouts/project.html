@@ -1,64 +1,39 @@
 ---
 layout: default
 ---
+{% if page.pdf %}
+  <meta http-equiv="refresh" content="0; url={{ page.pdf | relative_url }}">
+{% endif %}
+
 
 <h1>{{ page.title }}</h1>
 
-{% if page.pdf %}
-  <div class="mb-3">
-    <a class="btn btn-outline-light" href="{{ page.pdf | relative_url }}">
-      Download PDF
-    </a>
-  </div>
 
-  <div id="pdf-container" style="width:100%;"></div>
+<div class="project-content">
 
-  <!-- PDF.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
-  <script>
-    const url = "{{ page.pdf | relative_url }}";
-
-    const pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-    const container = document.getElementById('pdf-container');
-
-    pdfjsLib.getDocument(url).promise.then(function(pdf) {
-      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-        pdf.getPage(pageNumber).then(function(page) {
-          const scale = 1.5;
-          const viewport = page.getViewport({ scale: scale });
-
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          canvas.style.width = "100%";
-          canvas.style.marginBottom = "20px";
-
-          container.appendChild(canvas);
-
-          page.render({
-            canvasContext: context,
-            viewport: viewport
-          });
-        });
-      }
-    });
-  </script>
+{% if page.images %}
+    {% for img in page.images %}
+      <img src="{{ img | relative_url }}" class="inline-image">
+    {% endfor %}
 {% endif %}
 
-{{ content }}
 
-{% if page.technologies %}
-<p><strong>Technologies Used</strong>:
-  {{ page.technologies | join: ", " }}
-</p>
-{% endif %}
 
-<a href="{{ "/projects/" | relative_url }}" class="back-arrow">
-  <i class="bi bi-arrow-left-circle-fill"></i> Back to Projects
+
+
+
+
+
+{{ content | markdownify }}
+
+
+</div>
+
+
+<p><strong>Technologies Used</strong>: {{ page.technologies | join: ", " }}</p>
+
+
+<a href={{ "/projects/" | relative_url }} class="back-arrow">
+    <i class="bi bi-arrow-left-circle-fill"></i> Back to Projects
 </a>
